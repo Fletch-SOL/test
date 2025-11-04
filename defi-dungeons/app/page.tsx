@@ -1,11 +1,13 @@
 import { WalletConnectButton } from '@/components/WalletConnectButton';
 import { NFTGallery } from '@/components/NFTGallery';
+import { Navigation } from '@/components/Navigation';
 
 export default function Home() {
   return (
     <div className="min-h-screen p-8 bg-gradient-to-b from-gray-900 to-black">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
+        <div className="mb-8 flex items-center justify-between">
+          <Navigation />
           <WalletConnectButton />
         </div>
 
