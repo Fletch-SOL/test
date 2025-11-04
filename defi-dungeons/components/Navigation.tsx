@@ -9,6 +9,7 @@ export const Navigation = () => {
   const links = [
     { href: '/', label: 'NFT Gallery' },
     { href: '/heroes', label: 'My Heroes' },
+    { href: '/simulator', label: 'Raid Simulator' },
   ];
 
   return (
