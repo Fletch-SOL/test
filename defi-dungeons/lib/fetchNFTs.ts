@@ -18,13 +18,13 @@ export async function fetchWalletNFTs(
 
     for (const nft of nfts) {
       try {
-        // Load full metadata
-        const fullNft = await metaplex.nfts().load({ metadata: nft });
+        // Load full metadata - handle both Metadata and NFT types
+        const fullNft = await metaplex.nfts().load({ metadata: nft as any });
 
         // Parse JSON metadata
         if (fullNft.json) {
           heroNFTs.push({
-            mint: nft.mintAddress.toString(),
+            mint: fullNft.address.toString(),
             name: fullNft.json.name || 'Unknown Hero',
             image: fullNft.json.image || '',
             description: fullNft.json.description,
@@ -35,7 +35,7 @@ export async function fetchWalletNFTs(
           });
         }
       } catch (error) {
-        console.error(`Error loading NFT ${nft.mintAddress.toString()}:`, error);
+        console.error(`Error loading NFT:`, error);
         // Continue with other NFTs even if one fails
       }
     }
