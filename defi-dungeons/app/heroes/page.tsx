@@ -6,6 +6,7 @@ import { Hero } from '@/lib/simulator/types';
 import { getAllHeroes, deleteHero } from '@/lib/heroStorage';
 import { calculateFinalStats } from '@/lib/simulator/statCalculator';
 import { Navigation } from '@/components/Navigation';
+import { generateTestHeroes } from '@/lib/testHeroGenerator';
 
 export default function HeroesPage() {
   const [heroes, setHeroes] = useState<Hero[]>([]);
@@ -27,6 +28,11 @@ export default function HeroesPage() {
         setSelectedHero(null);
       }
     }
+  };
+
+  const handleCreateTestHeroes = () => {
+    generateTestHeroes();
+    loadHeroes();
   };
 
   const getClassColor = (heroClass: string) => {
@@ -73,17 +79,31 @@ export default function HeroesPage() {
 
         {heroes.length === 0 ? (
           <div className="text-center py-16">
-            <div className="bg-gray-800 inline-block p-12 rounded-lg border border-gray-700">
-              <h2 className="text-2xl font-bold text-white mb-4">No Heroes Yet</h2>
-              <p className="text-gray-400 mb-6">
-                Create your first hero to start building your roster
+            <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-2 border-purple-500/50 p-12 rounded-lg inline-block">
+              <div className="text-5xl mb-4">⚔️</div>
+              <h2 className="text-2xl font-bold text-purple-400 mb-4">No Heroes Yet</h2>
+              <p className="text-gray-300 mb-6 max-w-md">
+                Create your first heroes to start building your roster. Use test heroes for quick
+                testing or build custom heroes with your own stats!
               </p>
-              <Link
-                href="/heroes/new"
-                className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-semibold transition-colors"
-              >
-                Create Hero
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleCreateTestHeroes}
+                  className="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  ⚡ Create 5 Test Heroes
+                </button>
+                <Link
+                  href="/heroes/new"
+                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  🛠️ Build Custom Hero
+                </Link>
+              </div>
+              <p className="text-sm text-gray-400 mt-4">
+                Test heroes: Thorin (Tank), Lyra (Mage), Silvanus (Marksman), Aldric (Priest),
+                Grimnar (Berserker)
+              </p>
             </div>
           </div>
         ) : (

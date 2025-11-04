@@ -9,6 +9,7 @@ import { SimulationResults } from '@/components/raid-simulator/SimulationResults
 import { Boss, Hero, AggregatedResults } from '@/lib/simulator/types';
 import { getAllHeroes } from '@/lib/heroStorage';
 import { runMonteCarloSimulation } from '@/lib/simulator/monteCarloSimulator';
+import { generateTestHeroes } from '@/lib/testHeroGenerator';
 
 export default function SimulatorPage() {
   const [availableHeroes, setAvailableHeroes] = useState<Hero[]>([]);
@@ -105,6 +106,11 @@ export default function SimulatorPage() {
     return availableHeroes.filter((h) => !selectedIds.includes(h.id));
   };
 
+  const handleCreateTestHeroes = () => {
+    generateTestHeroes();
+    loadHeroes();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black p-8">
       <div className="max-w-7xl mx-auto">
@@ -123,33 +129,60 @@ export default function SimulatorPage() {
 
         {/* No Heroes Warning */}
         {availableHeroes.length === 0 && (
-          <div className="bg-red-900/20 border border-red-700/30 p-6 rounded-lg mb-8">
-            <h3 className="text-lg font-bold text-red-400 mb-2">No Heroes Available</h3>
-            <p className="text-gray-300 mb-4">
-              You need to create heroes before you can run simulations.
-            </p>
-            <Link
-              href="/heroes/new"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-semibold transition-colors"
-            >
-              Create Your First Hero
-            </Link>
+          <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-2 border-purple-500/50 p-8 rounded-lg mb-8">
+            <div className="text-center">
+              <div className="text-5xl mb-4">⚔️</div>
+              <h3 className="text-2xl font-bold text-purple-400 mb-3">No Heroes Available</h3>
+              <p className="text-gray-300 mb-6">
+                You need heroes to run raid simulations. Get started quickly with test heroes or
+                create your own!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleCreateTestHeroes}
+                  className="px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  ⚡ Create 5 Test Heroes
+                </button>
+                <Link
+                  href="/heroes/new"
+                  className="px-8 py-4 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg"
+                >
+                  🛠️ Build Custom Hero
+                </Link>
+              </div>
+              <p className="text-sm text-gray-400 mt-4">
+                Test heroes include: Tank Warrior, DPS Mage, Support Marksman, Healer Priest, and
+                Berserker
+              </p>
+            </div>
           </div>
         )}
 
         {availableHeroes.length < 3 && availableHeroes.length > 0 && (
-          <div className="bg-yellow-900/20 border border-yellow-700/30 p-6 rounded-lg mb-8">
-            <h3 className="text-lg font-bold text-yellow-400 mb-2">Need More Heroes</h3>
-            <p className="text-gray-300 mb-4">
-              You have {availableHeroes.length} hero(s). You need at least 3 heroes to run a raid
-              simulation.
-            </p>
-            <Link
-              href="/heroes/new"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-semibold transition-colors"
-            >
-              Create More Heroes
-            </Link>
+          <div className="bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border-2 border-yellow-500/50 p-8 rounded-lg mb-8">
+            <div className="text-center">
+              <div className="text-4xl mb-3">⚠️</div>
+              <h3 className="text-xl font-bold text-yellow-400 mb-2">Need More Heroes</h3>
+              <p className="text-gray-300 mb-6">
+                You have {availableHeroes.length} hero(s). You need at least 3 heroes to run a raid
+                simulation.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={handleCreateTestHeroes}
+                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
+                >
+                  ⚡ Add Test Heroes
+                </button>
+                <Link
+                  href="/heroes/new"
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-amber-600 hover:from-purple-700 hover:to-amber-700 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
+                >
+                  🛠️ Create Custom Hero
+                </Link>
+              </div>
+            </div>
           </div>
         )}
 
