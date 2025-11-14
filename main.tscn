@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3qh5yb8nwqlm"]
+
+[ext_resource type="PackedScene" uid="uid://dpqh5yb8nwqkl" path="res://player.tscn" id="1_2h8vd"]
+[ext_resource type="Script" path="res://enemy_spawner.gd" id="2_3h9ve"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ground"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ground"]
+size = Vector3(100, 0.5, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.3, 0.6, 0.3, 1)
+
+[node name="Main" type="Node3D"]
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_ground")
+surface_material_override/0 = SubResource("StandardMaterial3D_ground")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_ground")
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_2h8vd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 10, 0)
+shadow_enabled = true
+
+[node name="EnemySpawner" type="Node3D" parent="."]
+script = ExtResource("2_3h9ve")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+
+[node name="Environment" type="Environment" parent="WorldEnvironment"]
+background_mode = 1
+background_color = Color(0.5, 0.7, 0.9, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.8, 0.8, 0.8, 1)
